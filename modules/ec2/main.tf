@@ -19,11 +19,11 @@ resource "aws_instance" "ldap_server" {
 
   user_data = <<-EOF
     #!/bin/bash
-    hostnamectl ldap_server
+    hostnamectl set-hostname ldap_server.local
     yum update -y
     yum install -y openldap-servers openldap-clients
     systemctl start slapd
-    netstat -tulpen | grep -i 389
+    
 
     EOF
 
@@ -56,7 +56,7 @@ resource "aws_instance" "ldap_client" {
 
   user_data = <<-EOF
     #!/bin/bash
-    hostnamectl ldap_client
+    hostnamectl set-hostname ldap_client.local
     yum update -y
     yum install -y openldap-clients nss-pam-ldpad
 
